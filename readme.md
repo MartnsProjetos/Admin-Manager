@@ -148,12 +148,3 @@ Backup automático do banco de dados
 
 Layout responsivo para celular e tablet
 
-Se quiser, posso ajudar a montar:
-
-Estrutura de pastas do projeto
-
-Modelo do banco de dados MySQL completo
-
-Roteiro passo a passo para desenvolvimento em grupo
-
-Protótipos de telas
