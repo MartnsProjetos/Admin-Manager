@@ -1,44 +1,140 @@
-# Geniws – Marketplace de Freelancers para Projetos Tech
+🛍️ Sistema de Gerenciamento de Loja Completo
+🎯 Objetivo
+Desenvolver uma plataforma completa para que o dono da loja possa gerenciar de forma eficiente:
 
-**Geniws** é uma plataforma em desenvolvimento que visa conectar freelancers de tecnologia a clientes com demandas por projetos tech. Idealizada por estudantes de Análise e Desenvolvimento de Sistemas (ADS), o projeto é construído colaborativamente como uma iniciativa prática para aplicar conhecimentos técnicos e criar um portfólio real.
+Produtos
 
-## Sobre
+Clientes
 
-Este projeto surgiu da iniciativa de transformar nossa turma de Análise e Desenvolvimento de Sistemas (ADS), em uma simulação realista de uma empresa de tecnologia colaborativa. A proposta é desenvolver juntos um Marketplace de Freelancers para Projetos Tech — uma plataforma que conecta profissionais de tecnologia a clientes com demandas específicas.
+Vendas
 
-A iniciativa tem como foco aplicar na prática conhecimentos como Front-end, Back-end, banco de dados, metodologias ágeis e trabalho em equipe, ao longo de toda a duração do curso. Divididos em equipes, os participantes poderão contribuir gradualmente, de forma organizada, em um projeto real que servirá como portfólio técnico, e posteriormente uma rede real para programadores freelancers. A participação será aberta, voluntária e evolutiva, respeitando o ritmo de cada aluno.
+Estoque
 
-Esse projeto é mais do que uma atividade prática — é uma oportunidade de aprendizado colaborativo, networking e construção de carreira.
+Relatórios
 
-## 🚨 Observação:
+Login/Admin
 
-**Documentos para leitura obrigatória (alunos):**
+🛠️ Tecnologias Utilizadas
+Camada	Tecnologia
+Frontend	HTML5, CSS3, JavaScript (Vanilla)
+Backend	Node.js com Express.js
+Banco de Dados	MySQL (exemplo: Neon, PlanetScale)
+Desktop (Opcional)	Java (ex: painel local)
 
-- Regras: [`docs/rules.md`](docs/rules.md)
-- Objetivos: [`docs/objetivos.md`](./docs/objetivos.md)
+Bibliotecas e Ferramentas Extras
+Chart.js (gráficos no dashboard)
 
-## Stack Tecnológica
+bcrypt (criptografia de senhas)
 
-- **Front-end**: React.js, Tailwind CSS
-- **Back-end**: Node.js
-- **Banco de Dados**: PostgreSQL
-- **Outros**: API REST, GitHub Actions
+dotenv (variáveis de ambiente)
 
-## Requisitos do Projeto
+Axios / Fetch (comunicação frontend-backend)
 
-Os requisitos detalhados, incluindo histórias de usuário e critérios de aceitação, estão em [`docs/requirements.md`](docs/requirements.md)
+🧱 Funcionalidades Principais
+Módulo	Funcionalidade
+Autenticação	Login e cadastro de administradores
+Produtos	Cadastro, edição, exclusão, consulta e controle de estoque
+Clientes	Cadastro de clientes e histórico de compras
+Vendas	Registrar vendas, selecionar clientes e produtos, gerar recibo
+Estoque	Alertas de estoque baixo, entrada e saída de produtos
+Relatórios	Relatórios de vendas, produtos mais vendidos e faturamento
+Financeiro	Controle de entradas, saídas, despesas e lucro líquido
+Painel Admin	Visão geral com gráficos, alertas e metas
 
-**Documentos:**
+🧩 Estrutura do Banco de Dados (MySQL)
+sql
+Copiar
+Editar
+CREATE TABLE usuarios (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nome VARCHAR(100),
+  email VARCHAR(100) UNIQUE,
+  senha_hash VARCHAR(255)
+);
 
-- Requisitos: [`docs/requirements.md`](./docs/requirements.md)
-- Visão: [`docs/visao.md`](./docs/visao.md)
+CREATE TABLE clientes (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nome VARCHAR(100),
+  email VARCHAR(100),
+  telefone VARCHAR(20),
+  endereco TEXT
+);
 
-## Status do Projeto
+CREATE TABLE produtos (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nome VARCHAR(100),
+  descricao TEXT,
+  preco DECIMAL(10,2),
+  estoque INT
+);
 
-- 🧪 **Fase 1**: Onboarding e Preparação ⏳
-- 🧠 **Fase 2**: Levantamento de Requisitos e Planejamento do Projeto ⏳
-- 🚧 **Fase 3**: MVP - Versão Beta Inicial ⏳
-  1. [Equipe de UX/UI](activities/activity-design-1.md)
-  2. [Equipe Front-End](activities/activity-frontend-1.md)
-  3. [Equipe Back-End](activities/activity-backend-1.md)
-- 📝 **Fase 4**: Testes e Validações ⏳
+CREATE TABLE vendas (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  id_cliente INT,
+  data DATETIME,
+  total DECIMAL(10,2),
+  FOREIGN KEY (id_cliente) REFERENCES clientes(id)
+);
+
+CREATE TABLE itens_venda (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  id_venda INT,
+  id_produto INT,
+  quantidade INT,
+  subtotal DECIMAL(10,2),
+  FOREIGN KEY (id_venda) REFERENCES vendas(id),
+  FOREIGN KEY (id_produto) REFERENCES produtos(id)
+);
+
+CREATE TABLE estoque_log (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  id_produto INT,
+  tipo ENUM('entrada','saida'),
+  quantidade INT,
+  data DATETIME,
+  FOREIGN KEY (id_produto) REFERENCES produtos(id)
+);
+
+CREATE TABLE transacoes (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  tipo ENUM('entrada','saida'),
+  descricao TEXT,
+  valor DECIMAL(10,2),
+  data DATETIME
+);
+📱 Telas do Sistema
+Tela de Login e Cadastro
+
+Dashboard Geral (resumo: vendas, estoque, produtos)
+
+Cadastro e Listagem de Produtos
+
+Cadastro e Listagem de Clientes
+
+Tela de Nova Venda com carrinho
+
+Controle de Estoque com alertas
+
+Relatórios em gráficos (Chart.js)
+
+Tela Financeira (lucro, entradas e saídas)
+
+👥 Divisão de Tarefas (Exemplo para Equipe)
+Membro	Responsável por
+Frontend 1	Telas HTML/CSS de produtos, clientes e vendas
+Frontend 2	Dashboard, gráficos, responsividade
+Backend 1	Rotas e APIs para produtos, clientes e vendas
+Backend 2	Autenticação, login, sistema financeiro
+Banco de Dados	Modelagem, criação e manutenção do banco
+Java (Opcional)	Versão desktop local do sistema
+
+🌐 Funcionalidades Extras (Opcional)
+Exportar relatórios em PDF ou Excel
+
+Gerar recibo de venda automaticamente
+
+Sistema multiusuário (funcionários com diferentes permissões)
+
+Backup automático do banco de dados
+
+Responsividade para celulares e tablets
