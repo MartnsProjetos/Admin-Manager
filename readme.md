@@ -108,6 +108,9 @@ CREATE TABLE transacoes (
   valor DECIMAL(10,2),
   data DATETIME
 );
+```
+
+
 📱 Telas do Sistema
 🔐 Tela de Login e Cadastro
 
@@ -154,15 +157,3 @@ Modelo do banco de dados MySQL completo
 Roteiro passo a passo para desenvolvimento em grupo
 
 Protótipos de telas
-
-Quer começar por qual parte? 🚀
-
-yaml
-Copiar
-Editar
-
----
-
-Se quiser, posso ajudar a montar também a estrutura de pastas, o banco ou roteiros de estudo para o projeto.
-
-Quer que eu faça isso?
