@@ -1,150 +1,121 @@
-# 🛍️ Sistema de Gerenciamento de Loja Completo
+# 🛍️ **StoreManager – Sistema de Gerenciamento de Loja**
+
+> **Plataforma acadêmica colaborativa** que centraliza o controle de produtos, clientes, vendas, estoque e finanças para pequenos e médios comércios.
 
 ---
 
-## 🎯 Objetivo do Projeto
+## 📚 Sobre o Projeto
 
-Construir uma plataforma completa para que o dono da loja possa gerenciar:
+O **StoreManager** nasceu da iniciativa de transformar a turma de **Análise e Desenvolvimento de Sistemas (ADS)** em uma **simulação realista de uma empresa de tecnologia colaborativa**. Assim como o projeto‑modelo **Geniws** (Marketplace de Freelancers), nosso objetivo é unir forças para construir um sistema completo que sirva como **laboratório de aprendizado, networking e portfólio profissional**.
 
-- 📦 Produtos  
-- 👥 Clientes  
-- 🛒 Vendas  
-- 📊 Estoque  
-- 📈 Relatórios  
-- 🔐 Login/Admin  
+* **Aplicação prática** de Front‑end, Back‑end, banco de dados e metodologias ágeis.
+* **Participação aberta e voluntária**, respeitando o ritmo de cada integrante.
+* **Evolução contínua**: do MVP ao produto utilizável por lojistas reais.
 
----
-
-## 🛠️ Tecnologias Utilizadas
-
-| Camada            | Tecnologia                        |
-|-------------------|---------------------------------|
-| **Frontend**      | HTML5, CSS3, JavaScript (Vanilla) |
-| **Backend**       | Node.js, Express.js              |
-| **Banco de Dados**| MySQL (ex: Neon, PlanetScale)   |
-| **Desktop (Opcional)** | Java (painel para controle local) |
-
-### 📚 Bibliotecas e Ferramentas Extras
-
-- Chart.js – gráficos dinâmicos no dashboard  
-- bcrypt – criptografia de senhas  
-- dotenv – variáveis de ambiente seguras  
-- Axios / Fetch – comunicação frontend-backend via API  
+Este projeto é mais do que uma atividade de sala de aula — é uma oportunidade de **construir carreira colaborativamente**.
 
 ---
 
-## 🧩 Funcionalidades Principais
+## 🚨 Documentos Obrigatórios (para o time)
 
-| Módulo          | Funcionalidade                                         |
-|-----------------|-------------------------------------------------------|
-| 🔑 Autenticação | Login e cadastro de administradores                    |
-| 📦 Produtos     | Cadastro, edição, exclusão, consulta, controle de estoque |
-| 👥 Clientes     | Cadastro e histórico de compras                         |
-| 🛒 Vendas       | Registrar vendas, selecionar clientes/produtos, gerar recibos |
-| 📊 Estoque      | Alertas para estoque baixo, movimentação de produtos    |
-| 📈 Relatórios   | Relatórios de vendas, produtos mais vendidos, faturamento |
-| 💰 Financeiro   | Controle de entradas, saídas, despesas e lucro líquido  |
-| 🖥️ Painel Admin| Visão geral com gráficos, alertas e metas               |
+| Documento                | Caminho                |
+| ------------------------ | ---------------------- |
+| **Regras Internas**      | `docs/rules.md`        |
+| **Objetivos Detalhados** | `docs/objetivos.md`    |
+| **Requisitos**           | `docs/requirements.md` |
+| **Visão do Produto**     | `docs/visao.md`        |
+
+> **Leia estes arquivos antes de começar a contribuir.**
 
 ---
 
-## 🗄️ Estrutura do Banco de Dados (MySQL)
+## 🛠️ Stack Tecnológica
 
-```sql
-CREATE TABLE usuarios (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  nome VARCHAR(100),
-  email VARCHAR(100) UNIQUE,
-  senha_hash VARCHAR(255)
-);
+| Camada              | Tecnologias                                                    |
+| ------------------- | -------------------------------------------------------------- |
+| **Front‑end**       | HTML5 • CSS3 • JavaScript (Vanilla) • *React (opcional)*       |
+| **Back‑end Node**   | Node.js • Express.js                                           |
+| **Back‑end Java**   | Java • Spring Boot (microservice de produtos & clientes)       |
+| **Banco de Dados**  | MySQL (PlanetScale / Neon)                                     |
+| **DevOps & Extras** | API REST • GitHub Actions • Chart.js • Axios • bcrypt • dotenv |
 
-CREATE TABLE clientes (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  nome VARCHAR(100),
-  email VARCHAR(100),
-  telefone VARCHAR(20),
-  endereco TEXT
-);
+---
 
-CREATE TABLE produtos (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  nome VARCHAR(100),
-  descricao TEXT,
-  preco DECIMAL(10,2),
-  estoque INT
-);
+## 🧩 Funcionalidades Principais (Escopo MVP)
 
-CREATE TABLE vendas (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  id_cliente INT,
-  data DATETIME,
-  total DECIMAL(10,2),
-  FOREIGN KEY (id_cliente) REFERENCES clientes(id)
-);
+| Módulo               | Descrição                                                                  |
+| -------------------- | -------------------------------------------------------------------------- |
+| 🔑 **Autenticação**  | Login/cadastro de administradores (bcrypt + JWT)                           |
+| 📦 **Produtos**      | CRUD, controle de estoque, fotos e categorias                              |
+| 👥 **Clientes**      | Cadastro, histórico de compras                                             |
+| 🛒 **Vendas**        | PDV com carrinho, seleção de cliente/produtos, recibo                      |
+| 📊 **Estoque**       | Alertas automáticos, movimentações de entrada/saída                        |
+| 📈 **Relatórios**    | Gráficos dinâmicos (Chart.js): vendas, produtos mais vendidos, faturamento |
+| 💰 **Financeiro**    | Entradas, saídas, despesas, lucro líquido (fase avançada)                  |
+| 🖥️ **Painel Admin** | Dashboard com KPIs, metas e alertas                                        |
 
-CREATE TABLE itens_venda (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  id_venda INT,
-  id_produto INT,
-  quantidade INT,
-  subtotal DECIMAL(10,2),
-  FOREIGN KEY (id_venda) REFERENCES vendas(id),
-  FOREIGN KEY (id_produto) REFERENCES produtos(id)
-);
+---
 
-CREATE TABLE estoque_log (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  id_produto INT,
-  tipo ENUM('entrada','saida'),
-  quantidade INT,
-  data DATETIME,
-  FOREIGN KEY (id_produto) REFERENCES produtos(id)
-);
+## 🗄️ Estrutura de Banco de Dados (MySQL)
 
-CREATE TABLE transacoes (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  tipo ENUM('entrada','saida'),
-  descricao TEXT,
-  valor DECIMAL(10,2),
-  data DATETIME
-);
+Scripts SQL em `database/schema.sql`. Tabelas‑chave: `usuarios`, `clientes`, `produtos`, `vendas`, `itens_venda`, `estoque_log`, `transacoes`.
+
+---
+
+## 📂 Organização de Repositório
+
+```
+storemanager/
+├── backend-node/      # API Node.js (auth, vendas, financeiro)
+├── backend-java/      # API Java Spring (produtos, clientes, estoque)
+├── frontend/          # HTML/CSS/JS ou React
+├── docs/              # documentação (rules, objetivos, requisitos…)
+├── database/          # scripts SQL e migrations
+└── README.md          # (este arquivo)
 ```
 
+---
 
-📱 Telas do Sistema
-🔐 Tela de Login e Cadastro
+## 📅 Status do Projeto
 
-📊 Dashboard Geral com cards de resumo (vendas, estoque, produtos)
+| Fase          | Nome                                      | Status |
+| ------------- | ----------------------------------------- | ------ |
+| 🧪 **Fase 1** | Onboarding & Preparação                   | ⏳      |
+| 🧠 **Fase 2** | Levantamento de Requisitos & Planejamento | ⏳      |
+| 🚧 **Fase 3** | MVP – Versão Beta Inicial                 | ⏳      |
+| 📝 **Fase 4** | Testes & Validações                       | ⏳      |
 
-📦 Cadastro e listagem de produtos
+---
 
-👥 Cadastro e listagem de clientes
+## 👥 Equipes
 
-🛒 Tela de nova venda com carrinho
+* **UX/UI** – prototipação de telas
+* **Front‑end** – interface web (HTML/CSS/JS/React)
+* **Back‑end Node** – autenticação, vendas, relatórios
+* **Back‑end Java** – produtos, clientes, estoque
+* **Banco de Dados** – modelagem e scripts SQL
+* **QA/DevOps** – testes, CI/CD, qualidade de código
 
-📦 Controle de estoque com alertas
+A equipe completa conta com **6 membros** com formações complementares (Java, Node.js, React, HTML/CSS/JS, SQL). As atribuições detalhadas estão em `docs/roles.md`.
 
-📈 Relatórios em gráficos interativos (Chart.js)
+---
 
-💰 Tela de finanças (lucro, entradas e saídas)
+## 🌐 Extras Planejados (Pós‑MVP)
 
-👥 Divisão de Tarefas (Exemplo para Equipe)
-Membro	Responsável por...
-Frontend 1	Telas HTML/CSS de produtos, clientes e vendas
-Frontend 2	Dashboard, gráficos e responsividade
-Backend 1	Rotas Node.js para produtos, clientes e vendas
-Backend 2	Login, autenticação, sistema financeiro
-Banco de Dados	Modelagem e criação do banco e relacionamentos
-Java (Opcional)	Versão desktop simples para controle local
+* Exportação de relatórios em PDF/Excel
+* Suporte multiusuário (vendedores)
+* Backup automático do banco de dados
+* Aplicativo desktop Java FX para operação offline
 
-🌐 Extras (Opcional)
-Exportar relatórios em PDF ou Excel
+---
 
-Gerar recibo de venda
+## 💬 Como Contribuir
 
-Sistema multiusuário (mais de um funcionário)
+1. Leia os documentos obrigatórios listados acima.
+2. Faça **fork** → crie uma branch com nome descritivo → **Pull Request**.
+3. Siga o padrão **Conventional Commits**.
+4. Descreva seu PR e vincule‑o a issues.
 
-Backup automático do banco de dados
+---
 
-Layout responsivo para celular e tablet
-
+**Happy coding & learning! 🚀**
